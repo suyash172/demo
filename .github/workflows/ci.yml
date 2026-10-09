@@ -1,0 +1,23 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  docker-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build all images from clean checkout
+        run: docker compose build
+      - name: Start the full stack
+        run: docker compose up -d
+      - name: Smoke test
+        run: bash scripts/smoke.sh
+      - name: Show logs if something failed
+        if: failure()
+        run: docker compose logs
+      - name: Tear down
+        if: always()
+        run: docker compose down -v
