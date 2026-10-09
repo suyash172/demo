@@ -5,7 +5,7 @@ FAIL=0
 
 echo "Waiting for services (up to 60s)..."
 for i in $(seq 1 30); do
-  if curl -fs http://localhost:8000/health >/dev/null 2>&1 && curl -fs http://localhost:8001/health >/dev/null 2>&1; then
+    if curl -fs http://localhost:8000/health >/dev/null 2>&1 && curl -fs http://localhost:8001/health >/dev/null 2>&1 && curl -fs http://localhost:3000 >/dev/null 2>&1; then
     break
   fi
   sleep 2
